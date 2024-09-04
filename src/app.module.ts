@@ -11,7 +11,7 @@ import { LeitosModule } from './leitos/leitos.module';
     }),
     LeitosModule
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

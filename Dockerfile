@@ -36,7 +36,7 @@ COPY --chown=node:node --from=builder /app/dist ./dist
 COPY --from=builder /app/.env .env
 
 # Exponha a porta que a aplicação utilizará
-EXPOSE 3000
+EXPOSE 8080
 
 # Comando para iniciar a aplicação NestJS
 CMD [ "node", "dist/main.js" ]
