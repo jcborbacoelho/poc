@@ -3,13 +3,17 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LeitosModule } from './leitos/leitos.module';
+import { CloudantModule } from './database/cloudant/cloudant.module';
+import { MySqlModule } from './database/mysql/mysql.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // no need to import into other modules
     }),
-    LeitosModule
+    LeitosModule,
+    CloudantModule,
+    MySqlModule
   ],
   controllers: [AppController],
   providers: [AppService],
