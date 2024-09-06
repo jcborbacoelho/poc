@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { LeitosModule } from './leitos/leitos.module';
 import { CloudantModule } from './database/cloudant/cloudant.module';
 import { MySqlModule } from './database/mysql/mysql.module';
+import { PrevisaoAltaModule } from './paciente/previsao-alta/previsao-alta.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { MySqlModule } from './database/mysql/mysql.module';
     }),
     LeitosModule,
     CloudantModule,
-    MySqlModule
+    MySqlModule,
+    PrevisaoAltaModule
   ],
   controllers: [AppController],
   providers: [AppService],

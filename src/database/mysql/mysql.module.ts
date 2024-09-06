@@ -14,10 +14,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: process.env.DB_SQL_USERNAME,
         password: process.env.DB_SQL_PASSWORD,
         database: process.env.DB_SQL_DATABASE,
-        entities: [__dirname + '/../**/**/*.entity{.ts,.js}'],
+        entities: [__dirname + '/../../**/**/*.entity{.ts,.js}'],
         synchronize: false,
+        logging: true
       }),
     }),
   ],
 })
-export class MySqlModule {}
+export class MySqlModule { }
