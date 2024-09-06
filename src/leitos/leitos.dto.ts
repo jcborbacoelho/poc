@@ -10,8 +10,17 @@ export class SimpleDto {
     @IsNumber()
     totalOcupado: number
 }
+export class SetorLeitoGetDto {
+    @ApiProperty()
+    @IsNumber()
+    cdSetorAtendimento: number;
 
-export class LeitosGetDto {
+    @ApiProperty({ required: false })
+    @IsOptional()
+    @IsString()
+    dsSetorAtendimento?: string | null;
+}
+export class LeitoGetDto {
     @ApiProperty()
     @IsNumber()
     cdSetorAtendimento: number;
