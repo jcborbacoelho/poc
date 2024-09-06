@@ -2,8 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
+import { apiReference } from '@scalar/nestjs-api-reference'
+
 
 async function bootstrap() {
+
   const logger = new Logger('NestFactory');
   logger.log('Application run port: ' + process.env.PORT);
 
@@ -17,14 +20,21 @@ async function bootstrap() {
     )
     .setExternalDoc('Postman Collection', `${baseUrl}/documentation-json`)
     .setVersion('1.0')
-    .addApiKey({type: 'apiKey', name: 'Authorization', in: 'header'}, 'Authorization')
-    .addServer(`${baseUrl}`, 'URL Base da API', )
+    .addApiKey({ type: 'apiKey', name: 'Authorization', in: 'header' }, 'Authorization')
+    .addServer(`${baseUrl}`, 'URL Base da API',)
     .build();
 
   const document = SwaggerModule.createDocument(app, documentBuilder);
 
   SwaggerModule.setup('documentation', app, document);
-
+  app.use(
+    '/reference',
+    apiReference({
+      spec: {
+        url: '/documentation-json',
+      },
+    }),
+  )
   await app.listen(process.env.PORT || 3000);
 }
 
