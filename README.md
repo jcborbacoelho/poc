@@ -47,12 +47,18 @@ $ npm run test:cov
 ```bash
 docker build -t poc-tasy .
 ```
+
 ### Create new version image
 ```bash
 docker tag poc-tasy icr.io/ns-poc-tasy/repo-poc-tasy:v2
 ```
-### Push image to repository
 
+### Login CR - Container Registry
+```bash
+ibmcloud cr login
+```
+
+### Push image to repository
 ```bash
 docker push icr.io/ns-poc-tasy/repo-poc-tasy:v2
 ```
