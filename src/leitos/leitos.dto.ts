@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { isArray, IsArray, IsNumber, IsObject, isObject, IsOptional, IsString, ValidateNested } from "class-validator";
+
 
 export class SimpleDto {
     @ApiProperty()
@@ -10,6 +11,7 @@ export class SimpleDto {
     @IsNumber()
     totalOcupado: number
 }
+
 export class SetorLeitoGetDto {
     @ApiProperty()
     @IsNumber()
@@ -194,4 +196,21 @@ export class LeitoGetDto {
     @IsOptional()
     @IsNumber()
     qtPacIsolado?: number | null;
+}
+export class LeitoDataGetDto {
+    @IsObject()
+    @ApiProperty({ type: LeitoGetDto, isArray: true })
+    @ValidateNested()
+    data: LeitoGetDto[];
+}
+export class SetorLeitoDataGetDto {
+    @IsObject()
+    @ApiProperty({ type: SetorLeitoGetDto, isArray: true })
+    @ValidateNested()
+    data: SetorLeitoGetDto[];
+}
+
+
+function Type(arg0: () => any): (target: LeitoDataGetDto, propertyKey: "data") => void {
+    throw new Error("Function not implemented.");
 }
