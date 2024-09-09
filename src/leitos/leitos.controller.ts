@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LeitoGetDto, SetorLeitoGetDto } from './leitos.dto';
+import { LeitoDataGetDto, LeitoGetDto, SetorLeitoDataGetDto, SetorLeitoGetDto } from './leitos.dto';
 import { LeitosService } from "./leitos.service"
 
 @Controller('leitos')
@@ -9,7 +9,7 @@ export class LeitosController {
     constructor(private readonly leitosService: LeitosService) { }
     @ApiResponse({
         status: 200,
-        type: LeitoGetDto,
+        type: LeitoDataGetDto,
         description: 'Seleciona informações de um leito',
     })
     @Get('/setores/:cdSetorAtendimento')
@@ -20,7 +20,7 @@ export class LeitosController {
     }
     @ApiResponse({
         status: 200,
-        type: SetorLeitoGetDto,
+        type: SetorLeitoDataGetDto,
         description: 'Retorna todos setores',
     })
     @Get('/setores')
