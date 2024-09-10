@@ -1,239 +1,264 @@
 {
     "openapi": "3.0.0",
     "paths": {
-        "/": {
-            "get": {
-                "operationId": "AppController_get",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "App"
-                ]
+      "/": {
+        "get": {
+          "operationId": "AppController_get",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
             }
-        },
-        "/health": {
-            "get": {
-                "operationId": "AppController_getHealth",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "App"
-                ]
-            }
-        },
-        "/leitos/setores/{cdSetorAtendimento}": {
-            "get": {
-                "operationId": "LeitosController_ocupacaoLeitosBySetor",
-                "parameters": [
-                    {
-                        "name": "cdSetorAtendimento",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Seleciona informações de um leito",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/LeitoGetDto"
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "Leitos"
-                ]
-            }
-        },
-        "/leitos/setores": {
-            "get": {
-                "operationId": "LeitosController_listarSetores",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Retorna todos setores",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SetorLeitoGetDto"
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "Leitos"
-                ]
-            }
+          },
+          "tags": [
+            "App"
+          ]
         }
+      },
+      "/health": {
+        "get": {
+          "operationId": "AppController_getHealth",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "App"
+          ]
+        }
+      },
+      "/leitos/setores/filtro": {
+        "get": {
+          "operationId": "LeitosController_ocupacaoLeitosBySetorDescricao",
+          "parameters": [
+            {
+              "name": "cdSetorAtendimento",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "dsSetorAtendimento",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Seleciona informações de um leito de acordo com a Descrição informada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LeitoDataGetDto"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "Leitos"
+          ]
+        }
+      },
+      "/leitos/setores": {
+        "get": {
+          "operationId": "LeitosController_listarSetores",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Retorna todos setores",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "cdSetorAtendimento": {
+                              "type": "number",
+                              "example": 47
+                            },
+                            "dsSetorAtendimento": {
+                              "type": "string",
+                              "example": "Bloco Executivo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "Leitos"
+          ]
+        }
+      }
     },
     "info": {
-        "title": "POC Tasy",
-        "description": "Está API tem por objetivo, disponibilizar End-Points para envio dos dados do Censo Titularidade e Produto.",
-        "version": "1.0",
-        "contact": {}
+      "title": "POC Tasy",
+      "description": "Está API tem por objetivo, disponibilizar End-Points para envio dos dados do Censo Titularidade e Produto.",
+      "version": "1.0",
+      "contact": {
+  
+      }
     },
     "tags": [],
     "servers": [
-        {
-            "url": "https://tasy-poc.1lf2exw72bm8.us-south.codeengine.appdomain.cloud",
-            "description": "URL Base da API"
-        }
+      {
+        "url": "https://tasy-poc.1lf2exw72bm8.us-south.codeengine.appdomain.cloud",
+        "description": "URL Base da API"
+      }
     ],
     "components": {
-        "securitySchemes": {
-            "Authorization": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "Authorization"
-            }
-        },
-        "schemas": {
-            "LeitoGetDto": {
-                "type": "object",
-                "properties": {
-                    "cdSetorAtendimento": {
-                        "type": "number"
-                    },
-                    "dsSetorAtendimento": {
-                        "type": "string"
-                    },
-                    "cdEstabelecimentoBase": {
-                        "type": "number"
-                    },
-                    "cdClassifSetor": {
-                        "type": "string"
-                    },
-                    "nmUnidade": {
-                        "type": "string"
-                    },
-                    "dsOcupHosp": {
-                        "type": "string"
-                    },
-                    "nrSeqApresentacao": {
-                        "type": "number"
-                    },
-                    "nrUnidadesSetor": {
-                        "type": "number"
-                    },
-                    "nrUnidadesTemporarias": {
-                        "type": "number"
-                    },
-                    "nrUnidadesOcupadas": {
-                        "type": "number"
-                    },
-                    "qtUnidadeAcomp": {
-                        "type": "number"
-                    },
-                    "nrUnidadesInterditadas": {
-                        "type": "number"
-                    },
-                    "nrUnidadesLivres": {
-                        "type": "number"
-                    },
-                    "nrUnidadesHigienizacao": {
-                        "type": "number"
-                    },
-                    "nrUnidadesReservadas": {
-                        "type": "number"
-                    },
-                    "qtUnidadesIsolamento": {
-                        "type": "number"
-                    },
-                    "qtUnidadesAlta": {
-                        "type": "number"
-                    },
-                    "qtUnidadeSaidaInter": {
-                        "type": "number"
-                    },
-                    "qtUnidadeChamadManut": {
-                        "type": "number"
-                    },
-                    "qtUnidadeManutencao": {
-                        "type": "number"
-                    },
-                    "nrUnidTempOcup": {
-                        "type": "number"
-                    },
-                    "nrUnidTempOcupadas": {
-                        "type": "number"
-                    },
-                    "qtUnidTempAcomp": {
-                        "type": "number"
-                    },
-                    "nrUnidTempInterditadas": {
-                        "type": "number"
-                    },
-                    "nrUnidTempLivres": {
-                        "type": "number"
-                    },
-                    "nrUnidTempHigienizacao": {
-                        "type": "number"
-                    },
-                    "nrUnidTempReservadas": {
-                        "type": "number"
-                    },
-                    "qtUnidTempIsolamento": {
-                        "type": "number"
-                    },
-                    "qtUnidTempSaidInterd": {
-                        "type": "number"
-                    },
-                    "qtUnidTempAlta": {
-                        "type": "number"
-                    },
-                    "nrUnidadesReserva": {
-                        "type": "number"
-                    },
-                    "ieOcupHospitalar": {
-                        "type": "string"
-                    },
-                    "ieSituacao": {
-                        "type": "string"
-                    },
-                    "qtDisponiveis": {
-                        "type": "number"
-                    },
-                    "qtPacIsolado": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "cdSetorAtendimento"
-                ]
-            },
-            "SetorLeitoGetDto": {
-                "type": "object",
-                "properties": {
-                    "cdSetorAtendimento": {
-                        "type": "number"
-                    },
-                    "dsSetorAtendimento": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "cdSetorAtendimento"
-                ]
-            }
+      "securitySchemes": {
+        "Authorization": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "Authorization"
         }
+      },
+      "schemas": {
+        "LeitoGetDto": {
+          "type": "object",
+          "properties": {
+            "cdSetorAtendimento": {
+              "type": "number"
+            },
+            "dsSetorAtendimento": {
+              "type": "string"
+            },
+            "cdEstabelecimentoBase": {
+              "type": "number"
+            },
+            "cdClassifSetor": {
+              "type": "string"
+            },
+            "nmUnidade": {
+              "type": "string"
+            },
+            "dsOcupHosp": {
+              "type": "string"
+            },
+            "nrSeqApresentacao": {
+              "type": "number"
+            },
+            "nrUnidadesSetor": {
+              "type": "number"
+            },
+            "nrUnidadesTemporarias": {
+              "type": "number"
+            },
+            "nrUnidadesOcupadas": {
+              "type": "number"
+            },
+            "qtUnidadeAcomp": {
+              "type": "number"
+            },
+            "nrUnidadesInterditadas": {
+              "type": "number"
+            },
+            "nrUnidadesLivres": {
+              "type": "number"
+            },
+            "nrUnidadesHigienizacao": {
+              "type": "number"
+            },
+            "nrUnidadesReservadas": {
+              "type": "number"
+            },
+            "qtUnidadesIsolamento": {
+              "type": "number"
+            },
+            "qtUnidadesAlta": {
+              "type": "number"
+            },
+            "qtUnidadeSaidaInter": {
+              "type": "number"
+            },
+            "qtUnidadeChamadManut": {
+              "type": "number"
+            },
+            "qtUnidadeManutencao": {
+              "type": "number"
+            },
+            "nrUnidTempOcup": {
+              "type": "number"
+            },
+            "nrUnidTempOcupadas": {
+              "type": "number"
+            },
+            "qtUnidTempAcomp": {
+              "type": "number"
+            },
+            "nrUnidTempInterditadas": {
+              "type": "number"
+            },
+            "nrUnidTempLivres": {
+              "type": "number"
+            },
+            "nrUnidTempHigienizacao": {
+              "type": "number"
+            },
+            "nrUnidTempReservadas": {
+              "type": "number"
+            },
+            "qtUnidTempIsolamento": {
+              "type": "number"
+            },
+            "qtUnidTempSaidInterd": {
+              "type": "number"
+            },
+            "qtUnidTempAlta": {
+              "type": "number"
+            },
+            "nrUnidadesReserva": {
+              "type": "number"
+            },
+            "ieOcupHospitalar": {
+              "type": "string"
+            },
+            "ieSituacao": {
+              "type": "string"
+            },
+            "qtDisponiveis": {
+              "type": "number"
+            },
+            "qtPacIsolado": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cdSetorAtendimento"
+          ]
+        },
+        "LeitoDataGetDto": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "$ref": "#/components/schemas/LeitoGetDto"
+            }
+          },
+          "required": [
+            "data"
+          ]
+        }
+      }
     },
     "externalDocs": {
-        "description": "Postman Collection",
-        "url": "https://tasy-poc.1lf2exw72bm8.us-south.codeengine.appdomain.cloud/documentation-json"
+      "description": "Postman Collection",
+      "url": "https://tasy-poc.1lf2exw72bm8.us-south.codeengine.appdomain.cloud/documentation-json"
     }
-}
+  }

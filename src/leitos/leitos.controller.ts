@@ -1,30 +1,36 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LeitoDataGetDto, LeitoGetDto, SetorLeitoDataGetDto, SetorLeitoGetDto } from './leitos.dto';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LeitoDataGetDto, LeitoGetDto, SetorLeitoDataGetDto, SetorLeitoGetDto } from './dto/leitos.dto';
 import { LeitosService } from "./leitos.service"
+import { GetAllLeitos } from './schema/get-all-leitos.schema';
+import { FilterDto } from './dto/filter.dto';
 
 @Controller('leitos')
 @ApiTags('Leitos')
 export class LeitosController {
     constructor(private readonly leitosService: LeitosService) { }
+
     @ApiResponse({
         status: 200,
         type: LeitoDataGetDto,
-        description: 'Seleciona informações de um leito',
+        description: 'Seleciona informações de um leito de acordo com a Descrição informada',
     })
-    @Get('/setores/:cdSetorAtendimento')
-    async ocupacaoLeitosBySetor(
-        @Param('cdSetorAtendimento') cdSetorAtendimento: number,
+    @Get('/setores/filtro')
+    @ApiQuery({ name: 'cdSetorAtendimento', required: false })
+    @ApiQuery({ name: 'dsSetorAtendimento', required: false })
+    async ocupacaoLeitosBySetorDescricao(
+        @Query() query: FilterDto,
     ) {
-        return await this.leitosService.consulta(cdSetorAtendimento);
+        return await this.leitosService.consultaByFilter(query);
     }
+
     @ApiResponse({
         status: 200,
-        type: SetorLeitoDataGetDto,
         description: 'Retorna todos setores',
+        schema: GetAllLeitos
     })
     @Get('/setores')
-    async listarSetores() {
+    async listarSetores(): Promise<SetorLeitoDataGetDto> {
         return await this.leitosService.setores();
     }
 }
