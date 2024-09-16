@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { isArray, IsArray, IsNumber, IsObject, isObject, IsOptional, IsString, ValidateNested } from "class-validator";
+import { isArray, IsArray, IsDecimal, IsNumber, IsObject, isObject, IsOptional, IsString, ValidateNested } from "class-validator";
 
 
 export class SimpleDto {
@@ -196,7 +196,38 @@ export class LeitoGetDto {
     @IsOptional()
     @IsNumber()
     qtPacIsolado?: number | null;
+
+    @ApiProperty()
+    @IsOptional()
+    @IsDecimal({decimal_digits: '2', force_decimal: true})
+    porcentagem?: number | null
 }
+
+export class OcupacaoTotalGetDto {
+    @ApiProperty()
+    @IsNumber()
+    qtSetores: number | null;
+
+    @ApiProperty()
+    @IsNumber()
+    qtDisponiveis: number | null;
+
+    @ApiProperty()
+    @IsNumber()
+    qtLeitos: number | null;
+
+    @ApiProperty()
+    @IsDecimal({decimal_digits: '2', force_decimal: true})
+    porcentagem: number | null
+}
+
+export class OcupacaoTotalDataGetDto {
+    @IsObject()
+    @ApiProperty({ type: OcupacaoTotalGetDto, isArray: false })
+    @ValidateNested()
+    data: OcupacaoTotalGetDto;
+}
+
 export class LeitoDataGetDto {
     @IsObject()
     @ApiProperty({ type: LeitoGetDto, isArray: false })

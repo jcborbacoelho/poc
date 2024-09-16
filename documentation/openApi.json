@@ -29,6 +29,27 @@
           ]
         }
       },
+      "/leitos/ocupacao/geral": {
+        "get": {
+          "operationId": "LeitosController_ocupacaoGeral",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Seleciona informações de todos os leitos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OcupacaoTotalDataGetDto"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "Leitos"
+          ]
+        }
+      },
       "/leitos/setores/filtro": {
         "get": {
           "operationId": "LeitosController_ocupacaoLeitosBySetorDescricao",
@@ -131,6 +152,40 @@
         }
       },
       "schemas": {
+        "OcupacaoTotalGetDto": {
+          "type": "object",
+          "properties": {
+            "qtSetores": {
+              "type": "number"
+            },
+            "qtDisponiveis": {
+              "type": "number"
+            },
+            "qtLeitos": {
+              "type": "number"
+            },
+            "porcentagem": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "qtSetores",
+            "qtDisponiveis",
+            "qtLeitos",
+            "porcentagem"
+          ]
+        },
+        "OcupacaoTotalDataGetDto": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "$ref": "#/components/schemas/OcupacaoTotalGetDto"
+            }
+          },
+          "required": [
+            "data"
+          ]
+        },
         "LeitoGetDto": {
           "type": "object",
           "properties": {
@@ -238,10 +293,14 @@
             },
             "qtPacIsolado": {
               "type": "number"
+            },
+            "porcentagem": {
+              "type": "number"
             }
           },
           "required": [
-            "cdSetorAtendimento"
+            "cdSetorAtendimento",
+            "porcentagem"
           ]
         },
         "LeitoDataGetDto": {
