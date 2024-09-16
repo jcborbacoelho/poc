@@ -199,7 +199,7 @@ export class LeitoGetDto {
 
     @ApiProperty()
     @IsOptional()
-    @IsDecimal({decimal_digits: '2', force_decimal: true})
+    @IsDecimal({ decimal_digits: '2', force_decimal: true })
     porcentagem?: number | null
 }
 
@@ -217,8 +217,39 @@ export class OcupacaoTotalGetDto {
     qtLeitos: number | null;
 
     @ApiProperty()
-    @IsDecimal({decimal_digits: '2', force_decimal: true})
+    @IsDecimal({ decimal_digits: '2', force_decimal: true })
     porcentagem: number | null
+}
+export class OcupacaoStatusTotalGetDto {
+    @ApiProperty()
+    @IsNumber()
+    nrUnidadesInterditadas: number | null
+
+    @ApiProperty()
+    @IsNumber()
+    nrUnidadesHigienizacao: number | null
+
+    @ApiProperty()
+    @IsNumber()
+    nrUnidadesLivres: number | null
+
+    @ApiProperty()
+    @IsNumber()
+    qtUnidadesIsolamento: number | null
+
+    @ApiProperty()
+    @IsNumber()
+    qtUnidadeManutencao: number | null
+
+    @ApiProperty()
+    @IsNumber()
+    nrUnidadesReserva: number | null
+}
+export class OcupacaoStatusTotalDataGetDto {
+    @IsObject()
+    @ApiProperty({ type: OcupacaoTotalGetDto, isArray: false })
+    @ValidateNested()
+    data: OcupacaoStatusTotalGetDto;
 }
 
 export class OcupacaoTotalDataGetDto {

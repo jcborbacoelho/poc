@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LeitoDataGetDto, LeitoGetDto, OcupacaoTotalDataGetDto, SetorLeitoDataGetDto, SetorLeitoGetDto } from './dto/leitos.dto';
+import { LeitoDataGetDto, LeitoGetDto, OcupacaoStatusTotalDataGetDto, OcupacaoTotalDataGetDto, SetorLeitoDataGetDto, SetorLeitoGetDto } from './dto/leitos.dto';
 import { LeitosService } from "./leitos.service"
 import { GetAllLeitos } from './schema/get-all-leitos.schema';
 import { FilterDto } from './dto/filter.dto';
@@ -9,6 +9,16 @@ import { FilterDto } from './dto/filter.dto';
 @ApiTags('Leitos')
 export class LeitosController {
     constructor(private readonly leitosService: LeitosService) { }
+
+    @ApiResponse({
+        status: 200,
+        type: OcupacaoStatusTotalDataGetDto,
+        description: 'Seleciona informações de todos os leitos',
+    })
+    @Get('/ocupacao/geral-status')
+    async ocupacaoGeralStatus() {
+        return await this.leitosService.ocupacaoGeralStatus();
+    }
 
     @ApiResponse({
         status: 200,
